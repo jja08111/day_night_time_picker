@@ -154,15 +154,9 @@ class _DayNightTimePickerAndroidState extends State<DayNightTimePickerAndroid> {
     int _m = widget.value.minute;
     String _a = "am";
 
-    if (!widget.is24HrFormat) {
-      if (_h == 0) {
-        _h = 12;
-      } else if (_h == 12) {
-        _a = "pm";
-      } else if (_h > 12) {
-        _a = "pm";
-        _h -= 12;
-      }
+    if (!widget.is24HrFormat && _h >= 12) {
+      _a = "pm";
+      _h -= 12;
     }
     setState(() {
       hour = _h;
@@ -229,8 +223,8 @@ class _DayNightTimePickerAndroidState extends State<DayNightTimePickerAndroid> {
     int minDiff = (max - min).round();
     int divisions = getMinuteDivisions(minDiff, widget.minuteInterval);
 
-    double hourMinValue = widget.is24HrFormat ? 0 : 1;
-    double hourMaxValue = widget.is24HrFormat ? 23 : 12;
+    double hourMinValue = 0;
+    double hourMaxValue = widget.is24HrFormat ? 23 : 11;
 
     if (changingHour) {
       min = widget.minHour;
@@ -307,7 +301,7 @@ class _DayNightTimePickerAndroidState extends State<DayNightTimePickerAndroid> {
                                 child: Opacity(
                                   opacity: changingHour ? 1 : unselectedOpacity,
                                   child: Text(
-                                    "$hour",
+                                    "${getHourForPrint(hour, widget.is24HrFormat)}",
                                     style: _commonTimeStyles.copyWith(
                                         color: changingHour
                                             ? color
