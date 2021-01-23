@@ -51,11 +51,11 @@ import 'package:flutter/material.dart';
 ///
 /// **disableHour** - Disables the hour picker. Defaults to `false`.
 ///
-/// **maxHour** - Selectable maximum hour. Defaults to `12` | `23`.
+/// **maxHour** - Selectable maximum hour. Defaults to `11` | `23`.
 ///
 /// **maxMinute** - Selectable maximum minute. Defaults to `59`.
 ///
-/// **minHour** - Selectable minimum hour. Defaults to `0` | `1`.
+/// **minHour** - Selectable minimum hour. Defaults to `0` | `0`.
 ///
 /// **minMinute** - Selectable minimum minute. Defaults to `0`.
 PageRouteBuilder showPicker({
@@ -88,10 +88,10 @@ PageRouteBuilder showPicker({
   double maxHour = double.infinity,
 }) {
   if (minHour == double.infinity) {
-    minHour = is24HrFormat ? 0 : 1;
+    minHour = 0;
   }
   if (maxHour == double.infinity) {
-    maxHour = is24HrFormat ? 23 : 12;
+    maxHour = is24HrFormat ? 23 : 11;
   }
 
   assert(!(disableHour == true && disableMinute == true),
@@ -102,8 +102,8 @@ PageRouteBuilder showPicker({
     assert(maxHour <= 23 && minHour >= 0,
         "\"minHour\" and \"maxHour\" should be between 0-23 for 24-hour format");
   } else {
-    assert(maxHour <= 12 && minHour >= 1,
-        "\"minHour\" and \"maxHour\" should be between 1-12 for 12-hour format");
+    assert(maxHour <= 11 && minHour >= 0,
+        "\"minHour\" and \"maxHour\" should be between 0-11 for 12-hour format");
   }
 
   return PageRouteBuilder(
